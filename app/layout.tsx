@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     description:
       "Own the customer relationship with your branded restaurant app and connected digital ecosystem.",
     type: "website",
-    locale: "en_PT",
+    locale: "pt_PT",
   },
 };
 
@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="pt-PT" className="scroll-smooth">
       <body><LanguageProvider>{children}</LanguageProvider></body>
     </html>
   );

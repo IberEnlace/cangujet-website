@@ -10,7 +10,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   // SSR and the browser's first render must be identical. The saved preference
   // is deliberately unavailable until the component has mounted.
   const [mounted, setMounted] = useState(false);
-  const [locale, setLocaleState] = useState<Locale>("en");
+  const [locale, setLocaleState] = useState<Locale>("pt-PT");
 
   useEffect(() => {
     try {
@@ -38,7 +38,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     if (mounted) document.documentElement.lang = locale;
   }, [locale, mounted]);
 
-  const activeLocale: Locale = mounted ? locale : "en";
+  const activeLocale: Locale = mounted ? locale : "pt-PT";
   const setLocale = (next: Locale) => setLocaleState(next);
 
   const value = useMemo(

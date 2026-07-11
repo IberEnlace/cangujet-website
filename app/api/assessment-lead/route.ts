@@ -51,7 +51,14 @@ export async function POST(request: Request) {
     const apiKey = process.env.RESEND_API_KEY;
     const from = process.env.ASSESSMENT_EMAIL_FROM;
     if (!apiKey || !from) {
-      console.error("Assessment email configuration is missing.");
+      const missingEnvironmentVariables = [
+        !apiKey ? "RESEND_API_KEY" : "",
+        !from ? "ASSESSMENT_EMAIL_FROM" : "",
+      ].filter(Boolean);
+      console.error("Assessment email configuration is missing.", {
+        provider: "resend",
+        missingEnvironmentVariables,
+      });
       return NextResponse.json({ error: "Email delivery is not configured." }, { status: 503 });
     }
 
@@ -72,7 +79,12 @@ export async function POST(request: Request) {
     });
 
     if (!response.ok) {
-      console.error("Resend delivery failed", response.status, await response.text());
+      const providerError = await response.text();
+      console.error("Resend delivery failed.", {
+        status: response.status,
+        statusText: response.statusText,
+        providerError,
+      });
       return NextResponse.json({ error: "The email could not be sent." }, { status: 502 });
     }
 
