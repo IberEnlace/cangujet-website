@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { BrandMark } from "@/components/BrandMark";
 import { Icon } from "@/components/Icons";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -97,6 +97,7 @@ export function MobileAppLanding() {
   const [lead, setLead] = useState<Lead>({ name: "", restaurant: "", phone: "", email: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const hasTrackedLead = useRef(false);
 
   useEffect(() => {
     if (currentStep !== 7) return;
@@ -138,6 +139,10 @@ export function MobileAppLanding() {
         }),
       });
       if (!response.ok) throw new Error("Lead delivery failed");
+      if (!hasTrackedLead.current) {
+        window.fbq?.("track", "Lead");
+        hasTrackedLead.current = true;
+      }
       setCurrentStep(11);
     } catch (error) {
       console.error(error);

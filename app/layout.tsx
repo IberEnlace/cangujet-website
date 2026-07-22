@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { LanguageProvider } from "@/components/LanguageProvider";
+import { MetaPixel } from "@/components/MetaPixel";
 
 export const metadata: Metadata = {
   title: "Cangujet | Your restaurant. Your customers.",
@@ -25,7 +26,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-PT" className="scroll-smooth">
-      <body><LanguageProvider>{children}</LanguageProvider></body>
+      <body>
+        <MetaPixel />
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
     </html>
   );
 }
